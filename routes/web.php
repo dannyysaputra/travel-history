@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\registController;
 use App\Http\Controllers\travelController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,10 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 // Route::get('/dashboard', function () {
 //     return view('pages.dashboard');
 // });
@@ -30,5 +27,10 @@ Route::get('/', function () {
 //     return view('pages.input-data');
 // });
 Route::get('/', [travelController::class, 'index']);
-Route::get('/input-data', [travelController::class, 'inputDataTravel']);
+Route::get('/input-dashboard', [travelController::class, 'inputDataTravel']);
 Route::post('/simpanTravel', [travelController::class, 'simpanTravel']);
+
+Route::get('/login', [registController::class, 'login']);
+Route::get('/register', [registController::class, 'regist']);
+Route::post('registUser', [registController::class, 'registUser']);
+Route::get('/table-user', [registController::class, 'user']);

@@ -12,7 +12,7 @@
             <ul class="dropdown-menu">
                 <li class=active><a class="nav-link" href="/">General Dashboard</a></li>
                 <li><a class="nav-link" href="/input-dashboard">Input Dashboard</a></li>
-                <li><a class="nav-link" href="/input-data">Input Data</a></li>
+                <li><a class="nav-link" href="/table-user">User Table</a></li>
             </ul>
         </li>
         <li class="menu-header">Starter</li>

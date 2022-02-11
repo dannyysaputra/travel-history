@@ -9,7 +9,8 @@ class travelController extends Controller
 {
     public function index()
     {
-        return view('pages.dashboard');
+        $data = travel::all();
+        return view('pages.dashboard', ['data' => $data]);
     }
 
     public function inputDataTravel()
@@ -17,10 +18,11 @@ class travelController extends Controller
         return view('pages.input-data');
     }
 
+
     public function simpanTravel(Request $request)
     {
         $data = [
-            'id_user' => $request->id_user,
+            'id_user' => 1,
             'tanggal' => $request->tanggal,
             'lokasi' => $request->lokasi,
             'suhu' => $request->suhu
@@ -29,5 +31,6 @@ class travelController extends Controller
         // dd($data);
 
         travel::create($data);
+        return redirect('/')->with('message', 'Penyimpanan Berhasil');
     }
 }

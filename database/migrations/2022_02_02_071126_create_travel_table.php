@@ -18,7 +18,7 @@ class CreateTravelTable extends Migration
             $table->bigInteger('id_user');
             $table->dateTime('tanggal');
             $table->string('lokasi');
-            $table->string('suhu');
+            $table->integer('suhu');
             $table->timestamps();
         });
     }

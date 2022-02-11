@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('title', 'Input Data')
+@section('title', 'Input Dashboard')
 
 @section('content')
     <div class="card-header flex justify-content-between">
@@ -10,10 +10,6 @@
         <div class="card-body">
             <form action="/simpanTravel" method="POST">
                 {{ csrf_field() }}
-                <div class="form-group">
-                    <label for="exampleInputIdUser">Id user</label>
-                    <input type="number" id="exampleInputUserId" name="id_user" class="form-control form-control-sm">
-                </div>
                 <div class="form-group">
                     <label for="exampleInputTanggal">Tanggal dan jam</label>
                     <input type="datetime-local" id="exampleInputTanggal" name="tanggal"
