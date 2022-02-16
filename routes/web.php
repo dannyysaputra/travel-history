@@ -28,9 +28,9 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::get('/', [travelController::class, 'index']);
 Route::get('/input-dashboard', [travelController::class, 'inputDataTravel']);
-Route::post('/simpanTravel', [travelController::class, 'simpanTravel']);
-
+Route::get('/table-user', [registController::class, 'user']);
 Route::get('/login', [registController::class, 'login']);
 Route::get('/register', [registController::class, 'regist']);
+
 Route::post('registUser', [registController::class, 'registUser']);
-Route::get('/table-user', [registController::class, 'user']);
+Route::post('/simpanTravel', [travelController::class, 'simpanTravel']);
