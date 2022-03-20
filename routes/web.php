@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\loginController;
 use App\Http\Controllers\registController;
 use App\Http\Controllers\travelController;
 use Illuminate\Support\Facades\Route;
@@ -26,11 +27,16 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/input-data', function () {
 //     return view('pages.input-data');
 // });
-Route::get('/', [travelController::class, 'index']);
+Route::get('/dashboard', [travelController::class, 'index']);
 Route::get('/input-dashboard', [travelController::class, 'inputDataTravel']);
-Route::get('/table-user', [registController::class, 'user']);
-Route::get('/login', [registController::class, 'login']);
-Route::get('/register', [registController::class, 'regist']);
-
-Route::post('registUser', [registController::class, 'registUser']);
 Route::post('/simpanTravel', [travelController::class, 'simpanTravel']);
+
+Route::get('/table-user', [loginController::class, 'user']);
+
+Route::get('/', [loginController::class, 'index']);
+Route::any('/loginUser', [loginController::class, 'authenticate']);
+
+Route::get('/logout', [loginController::class, 'logout']);
+
+Route::get('/register', [registController::class, 'regist']);
+Route::post('registUser', [registController::class, 'registUser']);

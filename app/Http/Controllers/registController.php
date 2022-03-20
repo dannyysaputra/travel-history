@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class registController extends Controller
 {
@@ -12,26 +13,25 @@ class registController extends Controller
         return view('auth.register');
     }
 
-    public function login()
-    {
-        return view('auth.login');
-    }
-
-    public function user()
-    {
-        $data = user::all();
-        return view('pages.user', ['data' => $data]);
-    }
-
     public function registUser(Request $request)
     {
-        $data = [
-            'nama' => $request->nama,
-            'email' => 'email@',
-            'password' => $request->password
+        $validated = $request->validate([
+            'email' => 'required|unique:users',
+            'nama' => 'required|min:5|max:255',
+        ],
+        [
+            'email.unique' => 'NIK sudah terdaftar',
+            'nama.required' => 'Nama tidak boleh kosong'
+        ]);
+
+        $validatedData = [
+            "nama" => $validated['nama'],
+            "email" => $validated['email'],
+            "password" => bcrypt($validated['email'])
         ];
 
-        User::create($data);
-        return redirect('/')->with('message', 'Penyimpanan Berhasil');
+        // dd($validatedData);
+        User::create($validatedData);
+        return redirect('/')->with('success', 'Registrasi berhasil. Silahkan login!');
     }
 }

@@ -31,6 +31,6 @@ class travelController extends Controller
         // dd($data);
 
         travel::create($data);
-        return redirect('/')->with('message', 'Penyimpanan Berhasil');
+        return redirect('/dashboard')->with('message', 'Penyimpanan Berhasil');
     }
 }
