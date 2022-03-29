@@ -10,7 +10,7 @@
         <li class="{{ (request()->is('dashboard') || request()->is('input-dashboard') || request()->is('table-user')) ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             <ul class="dropdown-menu">
-                <li class="{{ (request()->is('dashboard')) ? 'active' : '' }}"><a class="nav-link" href="/">General Dashboard</a></li>
+                <li class="{{ (request()->is('dashboard')) ? 'active' : '' }}"><a class="nav-link" href="/dashboard">General Dashboard</a></li>
                 <li class="{{ (request()->is('input-dashboard')) ? 'active' : '' }}"><a class="nav-link" href="/input-dashboard">Input Dashboard</a></li>
                 <li class="{{ (request()->is('table-user') ? 'active' : '') }}"><a class="nav-link" href="/table-user">User Table</a></li>
             </ul>

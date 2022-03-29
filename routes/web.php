@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\registController;
+use App\Http\Controllers\searchController;
 use App\Http\Controllers\travelController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,16 +28,17 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/input-data', function () {
 //     return view('pages.input-data');
 // });
-Route::get('/dashboard', [travelController::class, 'index']);
-Route::get('/input-dashboard', [travelController::class, 'inputDataTravel']);
+Route::get('/dashboard', [travelController::class, 'index'])->middleware('auth');
+Route::get('/input-dashboard', [travelController::class, 'inputDataTravel'])->middleware('auth');
 Route::post('/simpanTravel', [travelController::class, 'simpanTravel']);
 
-Route::get('/table-user', [loginController::class, 'user']);
+Route::get('/table-user', [loginController::class, 'user'])->middleware('auth');
+Route::get('/search', [searchController::class, 'searchByCategory'])->middleware('auth');
 
-Route::get('/', [loginController::class, 'index']);
+Route::get('/', [loginController::class, 'index'])->name('login')->middleware('guest');
 Route::any('/loginUser', [loginController::class, 'authenticate']);
 
-Route::get('/logout', [loginController::class, 'logout']);
+Route::get('/logout', [loginController::class, 'logout'])->middleware('auth');
 
-Route::get('/register', [registController::class, 'regist']);
+Route::get('/register', [registController::class, 'regist'])->middleware('guest');
 Route::post('registUser', [registController::class, 'registUser']);
