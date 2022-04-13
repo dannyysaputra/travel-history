@@ -3,59 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\travel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
 use function PHPUnit\Framework\returnSelf;
 
 class searchController extends Controller
 {
     public function searchByCategory(Request $request)
     {
-        if(!empty($request->input('tanggal')) && empty($request->input('lokasi')) && empty($request->input('suhu'))) {
-            $search = $request->tanggal;
-            $data = User::join('travel', 'travel.id_user', '=', 'users.id')
-                ->Where(function ($query) use($search) {
-                    $query->where('users.nama', auth()->user()->nama)
-                        ->whereDate('travel.tanggal', $search)
-                        ->orWhereYear('travel.tanggal', $search);
-                })->get(['users.nama', 'travel.*']);
-                if($data) {
-                    return view('pages.dashboard', ['data'=>$data])->with('alert', 'Data di temukan.');
-                } else {
-                    abort(404);
-                }
-        } elseif(empty($request->input('tanggal')) && !empty($request->input('lokasi')) && empty($request->input('suhu'))) {
-            $search = $request->lokasi;
-            $data = User::join('travel', 'travel.id_user', '=', 'users.id')
-                ->Where(function ($query) use($search) {
-                    $query->where('users.nama', auth()->user()->nama)
-                        ->where('travel.lokasi', 'like', '%'.$search.'%');
-                })->get(['users.nama', 'travel.*']);
-                if($data) {
-                    return view('pages.dashboard', ['data'=>$data])->with('message', 'Data di temukan.');
-                } else {
-                    abort(404);
-                }
-        } elseif(empty($request->input('tanggal')) && empty($request->input('lokasi')) && !empty($request->input('suhu'))) {
-            $search = $request->suhu;
-            $data = User::join('travel', 'travel.id_user', '=', 'users.id')
-                ->Where(function ($query) use($search) {
-                    $query->where('users.nama', auth()->user()->nama)
-                        ->where('travel.suhu', 'like', '%'.$search.'%');
-                })->get(['users.nama', 'travel.*']);
-                if($data) {
-                    return view('pages.dashboard', ['data'=>$data])->with('alert', 'Data di temukan.');
-                } else {
-                    abort(404);
-                }
+        if($search = $request->tanggal) {
+            $data = Auth::user()->travels()->whereDate('travel.tanggal', $search)
+                        ->orWhereYear('travel.tanggal', $search)->get();
+        } elseif($search = $request->lokasi) {
+            $data = Auth::user()->travels()->where('travel.lokasi', 'like', '%'.$search.'%')->get();
+        } elseif($search = $request->suhu) {
+            $data = Auth::user()->travels()->where('travel.suhu', 'like', '%'.$search.'%')->get();
         } else {
-            $data = DB::table('travel')
-                ->join('users', 'users.id', '=', 'travel.id')
-                ->select('users.email', 'travel.tanggal', 'travel.lokasi', 'travel.suhu')
-                ->where('users.nama', '=', auth()->user()->nama)
+            $data = Auth::user()->travels;
+
+            $mode = $request->query('mode');
+            $field = $request->query('field');
+
+            if($mode && $field) {
+                $data = DB::table('travel')
+                ->orderBy($field, $mode)
                 ->get();
-                return view('pages.dashboard', ['data'=>$data]);
+            }
         }
+        return view('pages.dashboard', ['data'=>$data]);
     }
 }

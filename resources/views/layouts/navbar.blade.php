@@ -57,16 +57,16 @@
 
 <script>
     // search by category
-function searchCategories(category) {
-    if (category.value == 'tanggal') {
-        document.getElementById('iftanggal').style.display = 'block';
-    } else if (category.value == 'lokasi') {
-        document.getElementById('iftanggal').style.display = 'none';
-        document.getElementById('iflokasi').style.display = 'block';
-    } else {
-        document.getElementById('iftanggal').style.display = 'none';
-        document.getElementById('iflokasi').style.display = 'none';
-        document.getElementById('ifsuhu').style.display = 'block';
+    function searchCategories(category) {
+        if (category.value == 'tanggal') {
+            document.getElementById('iftanggal').style.display = 'block';
+        } else if (category.value == 'lokasi') {
+            document.getElementById('iftanggal').style.display = 'none';
+            document.getElementById('iflokasi').style.display = 'block';
+        } else {
+            document.getElementById('iftanggal').style.display = 'none';
+            document.getElementById('iflokasi').style.display = 'none';
+            document.getElementById('ifsuhu').style.display = 'block';
+        }
     }
-}
 </script>

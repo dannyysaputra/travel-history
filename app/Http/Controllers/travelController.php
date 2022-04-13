@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\travel;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class travelController extends Controller
 {
     public function index()
     {
-        $data = travel::all();
+        $data = DB::table('travel')->paginate(6);
         return view('pages.dashboard', ['data' => $data]);
     }
 
